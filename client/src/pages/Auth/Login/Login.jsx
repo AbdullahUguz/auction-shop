@@ -1,4 +1,9 @@
-import React from "react";
+import {useNavigate} from "react-router-dom";
+import { useFormik } from "formik";
+import validations from "../../../validations/Validation";
+import { fetchLogin } from "../../../api/api";
+import {useAuth} from "../../../contexts/AuthContext";
+
 import {
   Flex,
   Box,
@@ -8,10 +13,52 @@ import {
   Button,
   Input,
   Divider,
-  Text
+  Text,
+  Alert
 } from "@chakra-ui/react";
 
+
 function Login() {
+
+  const navigate = useNavigate();
+  const {login}= useAuth();
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    isSubmitting,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values, bag) => {
+      try {
+        await fetchLogin({
+          email: values.email,
+          password: values.password,
+        }).then((res)=>{
+          console.log("cookie : ",document.cookie)
+          login({username:res.username,role:res.role});
+          navigate("/");
+        }).catch(err=>{
+           alert(err);
+           bag.resetForm();
+        });
+        
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    validationSchema: validations,
+  });
+
+
   return (
       <Flex align="center" justifyContent="center">
         <Box pt="20">
@@ -19,11 +66,11 @@ function Login() {
             <Heading size={"xl"} mb="3">AUCTION SHOP</Heading>
             <Heading size={"lg"}>Login</Heading>
           </Box>
-          {/*<Box my={5}>
-             {formik.errors.general && (
-              <Alert status="error">{formik.errors.general}</Alert>
+          <Box my={5}>
+             {errors.general && (
+              <Alert status="error">{errors.general}</Alert>
             )} 
-            </Box> */}
+            </Box>
 
           <Box
             bg="white"
@@ -32,17 +79,16 @@ function Login() {
             boxShadow="dark-lg"
             rounded="md"
           >
-            {/* <form onSubmit={formik.handleSubmit}> */}
-            <form>
+            <form onSubmit={handleSubmit}>
               <FormControl>
                 <FormLabel>E-mail</FormLabel>
                 <Input
                   htmlSize="30"
                   name="email"
-                  //   onChange={formik.handleChange}
-                  //   onBlur={formik.handleBlur}
-                  //   value={formik.values.email}
-                  //   isInvalid={formik.touched.email && formik.errors.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  isInvalid={touched.email && errors.email}
                 />
               </FormControl>
 
@@ -51,10 +97,10 @@ function Login() {
                 <Input
                   name="password"
                   type="password"
-                  //   onChange={formik.handleChange}
-                  //   onBlur={formik.handleBlur}
-                  //   value={formik.values.password}
-                  //   isInvalid={formik.touched.password && formik.errors.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  isInvalid={touched.password && errors.password}
                 />
               </FormControl>
 
@@ -65,7 +111,7 @@ function Login() {
                 <Divider />
                 <Text mt={4} color="muted" fontSize="xs">Don't have an account?</Text>
                 <Button variant="link" size="xs" colorScheme="blue">
-                  Sign up
+                  Register
                 </Button>
               </Box>
             </form>
