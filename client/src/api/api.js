@@ -20,19 +20,29 @@ export const fetchRegister = async (input) => {
 
 export const fetchLogin = async (input) => {
   const { data } = await axios.post(
-    "http://localhost:8080/auth/login",
+    "/auth/login",
     input
   );
   return data;
 };
 
 export const fetchLogout = async () => {
-    const { data } = await axios.post("http://localhost:8080/auth/logout");
+    const { data } = await axios.post("/auth/logout",{
+      withCredentials: true,
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  });
     return data;
   };
 
 export const fetchMe = async () => {
-  const { data } = await axios.get("http://localhost:8080/auth/me",);
+  const { data } = await axios.get("/auth/me",{
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
   return data;
 };
 

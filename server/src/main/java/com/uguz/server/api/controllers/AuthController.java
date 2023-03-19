@@ -5,7 +5,6 @@ import com.uguz.server.config.UserAuthProvider;
 import com.uguz.server.dto.UserDto;
 import com.uguz.server.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,12 +57,13 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@AuthenticationPrincipal UserDto user) {
+        System.out.println(SecurityContextHolder.getContext());
         SecurityContextHolder.clearContext();
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/me")
-    public ResponseEntity<User> logout() {
+    public ResponseEntity<User> me(@AuthenticationPrincipal UserDto userDto) {
         UserDto authUser = (UserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(authUser.getEmail());
 
