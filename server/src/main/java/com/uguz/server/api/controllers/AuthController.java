@@ -56,10 +56,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@AuthenticationPrincipal UserDto user) {
+    public ResponseEntity<String> logout(@AuthenticationPrincipal UserDto user) {
         System.out.println(SecurityContextHolder.getContext());
         SecurityContextHolder.clearContext();
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Logout success");
     }
 
     @GetMapping("/me")
@@ -73,13 +73,5 @@ public class AuthController {
             return ResponseEntity.ok(user);
         }
     }
-//    @GetMapping("/check")
-//    public ResponseEntity<Boolean> check() {
-//        boolean control = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-//        /*
-//         buraya şey yap eğer auth ok sa username ve role göndersin
-//         */
-//        return new ResponseEntity<>(control,HttpStatus.OK);
-//    }
 
 }
