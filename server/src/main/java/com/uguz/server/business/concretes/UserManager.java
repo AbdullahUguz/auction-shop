@@ -12,7 +12,6 @@ import java.nio.CharBuffer;
 
 @Service
 @EnableAutoConfiguration
-
 public class UserManager implements UserService {
 
     private UserRepository userRepository;
@@ -27,15 +26,14 @@ public class UserManager implements UserService {
 
     @Override
     public void create(User user) {
+        /*
+         buraya bir control ekle istersen aynı isim varsa eklemesin
+         */
         String encodedMasterPassword = passwordEncoder.encode(CharBuffer.wrap(user.getPassword()));
         user.setPassword(encodedMasterPassword);
         this.userRepository.save(user);
     }
 
-    @Override
-    public User findByUserName(String username) {
-        return this.userRepository.findByUsername(username);
-    }
 
     @Override
     public User findByEmail(String email) {

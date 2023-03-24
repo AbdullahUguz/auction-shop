@@ -22,10 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> add(@RequestBody User user) {
-        /*
-         buraya bir control ekle istersen aynı isim varsa eklemesin
-         */
+    private ResponseEntity<String> add(@RequestBody User user) {
         this.userService.create(user);
         return new ResponseEntity<>("User successfully added.", HttpStatus.CREATED);
     }
