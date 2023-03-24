@@ -39,3 +39,17 @@ export const fetchMe = async () => {
   });
   return data;
 };
+
+export const fetchGetAllProduct = async () => {
+  const { data } = await axios.get("/api/products/getAll", {
+    withCredentials: true,
+  });
+  return data;
+};
+
+export const fetchProductById = async (productId) => {
+  const { data } = await axios.get(`/api/products/getProductById/${productId}`, {
+    withCredentials: true,
+  });
+  return data;
+};
