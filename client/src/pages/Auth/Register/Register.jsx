@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import Logo from "../../../logo/logo.png";
 import {
   Flex,
   Box,
@@ -9,6 +10,7 @@ import {
   Input,
   Divider,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { fetchRegister } from "../../../api/api";
@@ -24,7 +26,7 @@ function Register() {
     handleChange,
     handleBlur,
     values,
-  //  isSubmitting,
+    //  isSubmitting,
     errors,
     touched,
   } = useFormik({
@@ -56,14 +58,12 @@ function Register() {
 
   return !loggedIn ? (
     <Flex align="center" justifyContent="center">
-      <Box pt="20">
-        <Box textAlign="center" mb="4">
-          <Heading size={"xl"} mb="3">
-            AUCTION SHOP
-          </Heading>
-          <Heading size={"lg"}>Register</Heading>
+      <Box >
+        <Box align="center" mt="5" mb="3">
+          <Image w="300px" h="180px" src={Logo} alt="Auction Shop" />
         </Box>
-        <Box bg="white" px="16" py="10" boxShadow="dark-lg" rounded="md">
+
+        <Box bg="white" px="16" py="8" boxShadow="dark-lg" rounded="md">
           <form onSubmit={handleSubmit}>
             <FormControl>
               <FormLabel>Username</FormLabel>
@@ -77,7 +77,7 @@ function Register() {
                 isInvalid={touched.username && errors.username}
               />
               {errors.username ? (
-                <Text color="red">{errors.username}</Text>
+                <Text fontSize='sm' color="red">{errors.username}</Text>
               ) : (
                 <></>
               )}
@@ -93,11 +93,7 @@ function Register() {
                 value={values.email}
                 isInvalid={touched.email && errors.email}
               />
-              {errors.email ? (
-                <Text color="red">{errors.email}</Text>
-              ) : (
-                <></>
-              )}
+              {errors.email ? <Text fontSize='sm' color="red">{errors.email}</Text> : <></>}
             </FormControl>
 
             <FormControl mt="4">
@@ -111,7 +107,7 @@ function Register() {
                 isInvalid={touched.password && errors.password}
               />
               {errors.password ? (
-                <Text color="red">{errors.password}</Text>
+                <Text fontSize='sm' color="red">{errors.password}</Text>
               ) : (
                 <></>
               )}
@@ -122,7 +118,7 @@ function Register() {
                 Register
               </Button>
               <Divider />
-              <Text mt={4} color="muted" fontSize="xs">
+              <Text mt="3" color="muted" fontSize="xs">
                 If you have an account
               </Text>
               <Button variant="link" size="xs" colorScheme="blue">

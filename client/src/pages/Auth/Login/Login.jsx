@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import validations from "./Validation";
 import { fetchLogin } from "../../../api/api";
 import { useAuth } from "../../../contexts/AuthContext";
+import Logo from "../../../logo/logo.png";
 
 import {
   Flex,
@@ -14,6 +15,7 @@ import {
   Input,
   Divider,
   Text,
+  Image,
 } from "@chakra-ui/react";
 
 function Login() {
@@ -25,7 +27,7 @@ function Login() {
     handleChange,
     handleBlur,
     values,
-  //  isSubmitting,
+    //  isSubmitting,
     errors,
     touched,
   } = useFormik({
@@ -57,12 +59,9 @@ function Login() {
 
   return !loggedIn ? (
     <Flex align="center" justifyContent="center">
-      <Box pt="20">
-        <Box textAlign="center" mb="4">
-          <Heading size={"xl"} mb="3">
-            AUCTION SHOP
-          </Heading>
-          <Heading size={"lg"}>Login</Heading>
+      <Box>
+        <Box align="center" mb="3" mt="10">
+          <Image w="300px" h="180px" src={Logo} alt="Auction Shop" />
         </Box>
         <Box bg="white" px="16" py="10" boxShadow="dark-lg" rounded="md">
           <form onSubmit={handleSubmit}>
@@ -77,7 +76,7 @@ function Login() {
                 value={values.email}
                 isInvalid={touched.email && errors.email}
               />
-              {errors.email ? <Text color="red">{errors.email}</Text> : <></>}
+              {errors.email ? <Text fontSize='sm' color="red">{errors.email}</Text> : <></>}
             </FormControl>
 
             <FormControl mt="4">
@@ -91,7 +90,7 @@ function Login() {
                 isInvalid={touched.password && errors.password}
               />
               {errors.password ? (
-                <Text color="red">{errors.password}</Text>
+                <Text fontSize='sm' color="red">{errors.password}</Text>
               ) : (
                 <></>
               )}
