@@ -58,7 +58,7 @@ function Register() {
 
   return !loggedIn ? (
     <Flex align="center" justifyContent="center">
-      <Box >
+      <Box>
         <Box align="center" mt="5" mb="3">
           <Image w="300px" h="180px" src={Logo} alt="Auction Shop" />
         </Box>
@@ -77,7 +77,9 @@ function Register() {
                 isInvalid={touched.username && errors.username}
               />
               {errors.username ? (
-                <Text fontSize='sm' color="red">{errors.username}</Text>
+                <Text fontSize="sm" color="red">
+                  {errors.username}
+                </Text>
               ) : (
                 <></>
               )}
@@ -93,7 +95,13 @@ function Register() {
                 value={values.email}
                 isInvalid={touched.email && errors.email}
               />
-              {errors.email ? <Text fontSize='sm' color="red">{errors.email}</Text> : <></>}
+              {errors.email ? (
+                <Text fontSize="sm" color="red">
+                  {errors.email}
+                </Text>
+              ) : (
+                <></>
+              )}
             </FormControl>
 
             <FormControl mt="4">
@@ -107,7 +115,9 @@ function Register() {
                 isInvalid={touched.password && errors.password}
               />
               {errors.password ? (
-                <Text fontSize='sm' color="red">{errors.password}</Text>
+                <Text fontSize="sm" color="red">
+                  {errors.password}
+                </Text>
               ) : (
                 <></>
               )}
@@ -121,9 +131,11 @@ function Register() {
               <Text mt="3" color="muted" fontSize="xs">
                 If you have an account
               </Text>
-              <Button variant="link" size="xs" colorScheme="blue">
-                <Link to="/login">Login</Link>
-              </Button>
+              <Link to="/login">
+                <Button variant="link" size="xs" colorScheme="blue">
+                  Login
+                </Button>
+              </Link>
             </Box>
           </form>
         </Box>

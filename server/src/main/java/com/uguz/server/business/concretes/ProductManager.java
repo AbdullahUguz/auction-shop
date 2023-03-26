@@ -1,6 +1,7 @@
 package com.uguz.server.business.concretes;
 
 import com.uguz.server.business.abstracts.ProductService;
+import com.uguz.server.dto.ProductDto;
 import com.uguz.server.entities.Product;
 import com.uguz.server.entities.User;
 import com.uguz.server.repository.ProductRepository;
@@ -26,17 +27,35 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public Product findById(long id) {
+    public Product getById(long id) {
         return this.productRepository.findById(id);
     }
 
     @Override
-    public Product findProductByPrice(double price) {
+    public Product getProductByPrice(double price) {
         return this.productRepository.findProductByPrice(price);
     }
 
     @Override
-    public List<Product> findAll() {
+    public Product getProductByTitle(String title) {
+        return this.productRepository.findProductByTitle(title);
+    }
+
+    @Override
+    public Product update(long id,double price) {
+        Product product = this.getById(id);
+        if(product == null){
+            System.out.println("product null");
+            return null;
+        }else {
+            product.setPrice(price);
+            this.productRepository.save(product);
+            return  product;
+        }
+    }
+
+    @Override
+    public List<Product> getAll() {
         return this.productRepository.findAll();
     }
 }

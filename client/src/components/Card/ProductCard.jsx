@@ -1,22 +1,21 @@
 import React from "react";
 import {
-    Card,
-    CardBody,
-    Image,
-    Stack,
-    Heading,
-    Text,
-    Divider,
-    CardFooter,
-    ButtonGroup,
-    Button
-    
-} from '@chakra-ui/react';
+  Card,
+  CardBody,
+  Image,
+  Stack,
+  Heading,
+  Text,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Button,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-function ProductCard({product}) {
+function ProductCard({ product }) {
   return (
-    <Card maxW="sm" >
+    <Card maxW="sm">
       <CardBody>
         <Image
           src={product.imageUrl}
@@ -33,9 +32,11 @@ function ProductCard({product}) {
       <Divider />
       <CardFooter>
         <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
-            <Link to={`/products/${product.id}`} >Go To Auction</Link>
-          </Button>
+          <Link to={`/products/${product.id}`}>
+            <Button variant="solid" colorScheme="blue">
+              Go To Auction
+            </Button>
+          </Link>
         </ButtonGroup>
       </CardFooter>
     </Card>

@@ -76,7 +76,13 @@ function Login() {
                 value={values.email}
                 isInvalid={touched.email && errors.email}
               />
-              {errors.email ? <Text fontSize='sm' color="red">{errors.email}</Text> : <></>}
+              {errors.email ? (
+                <Text fontSize="sm" color="red">
+                  {errors.email}
+                </Text>
+              ) : (
+                <></>
+              )}
             </FormControl>
 
             <FormControl mt="4">
@@ -90,7 +96,9 @@ function Login() {
                 isInvalid={touched.password && errors.password}
               />
               {errors.password ? (
-                <Text fontSize='sm' color="red">{errors.password}</Text>
+                <Text fontSize="sm" color="red">
+                  {errors.password}
+                </Text>
               ) : (
                 <></>
               )}
@@ -104,9 +112,11 @@ function Login() {
               <Text mt={4} color="muted" fontSize="xs">
                 Don't have an account?
               </Text>
-              <Button variant="link" size="xs" colorScheme="blue">
-                <Link to="/register">Register</Link>
-              </Button>
+              <Link to="/register">
+                <Button variant="link" size="xs" colorScheme="blue">
+                  Register
+                </Button>
+              </Link>
             </Box>
           </form>
         </Box>

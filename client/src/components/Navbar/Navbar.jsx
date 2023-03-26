@@ -7,7 +7,7 @@ import {
   Container,
   HStack,
   Flex,
-  Image
+  Image,
 } from "@chakra-ui/react";
 
 function Navbar() {
@@ -17,19 +17,19 @@ function Navbar() {
         <HStack spacing="10" justify="space-between">
           <Button variant="unstyled" mb="3">
             <Link to="/">
-              <Image w="120px"  h="58px" src={Logo} alt="Auction Shop" />
+              <Image w="120px" h="58px" src={Logo} alt="Auction Shop" />
             </Link>
           </Button>
           <Flex justify="space-between" flex="1">
             <ButtonGroup variant="link" spacing="8">
-              <Button variant="link">
-                <Link to="/">Main Page</Link>
-              </Button>
+              <Link to="/">
+                <Button variant="link">Main Page</Button>
+              </Link>
             </ButtonGroup>
             <HStack spacing="10">
-              <Button colorScheme="blue">
-                <Link to="/profile">Profile</Link>
-              </Button>
+              <Link to="/profile">
+                <Button colorScheme="blue">Profile</Button>
+              </Link>
             </HStack>
           </Flex>
         </HStack>

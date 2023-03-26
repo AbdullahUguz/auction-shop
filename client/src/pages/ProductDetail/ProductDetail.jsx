@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { fetchProductById } from "../../api/api";
 
 function ProductDetail() {
+  const [price,setPrice]=useState();
   const { productId } = useParams();
   const [product, setProduct] = useState();
   useEffect(() => {
@@ -19,6 +20,7 @@ function ProductDetail() {
       .then((res) => {
         console.log("res getProductById : ", res);
         setProduct(res);
+        setPrice(res.price);
       })
       .catch((err) => {
         console.log(err);
@@ -29,11 +31,11 @@ function ProductDetail() {
     <Container maxW="1400px" mt={3}>
       <SimpleGrid columns={[1, null, 2]} spacing="20px">
         {product ? (
-          <ProductDetailCard product={product}></ProductDetailCard>
+          <ProductDetailCard product={product} price={price}></ProductDetailCard>
         ) : (
           <p>Loading...</p>
         )}
-        <ChatCard></ChatCard>
+        <ChatCard price={price}  setPrice={setPrice}></ChatCard>
       </SimpleGrid>
     </Container>
   );

@@ -30,21 +30,27 @@ public class ProductController {
 
     @GetMapping("/getAll")
     private ResponseEntity<List<Product>> getAll(){
-        List<Product> products = this.productService.findAll();
+        List<Product> products = this.productService.getAll();
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 
     @GetMapping("/getProductById/{productId}")
     private ResponseEntity<Product> getByProductId(@PathVariable Long productId){
-        Product product = this.productService.findById(productId);
+        Product product = this.productService.getById(productId);
         return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
     @GetMapping("/getProductByPrice")
     private ResponseEntity<Product> getProductByPrice(@RequestBody ProductDto productDto){
-        Product product = this.productService.findProductByPrice(productDto.getPrice());
+        Product product = this.productService.getProductByPrice(productDto.getPrice());
         System.out.println("pssp : "+product.getTitle());
         return new ResponseEntity<>(product,HttpStatus.OK);
+    }
+
+    @PutMapping("/updatePrice/{productId}")
+    private ResponseEntity<Product> updatePrice(@PathVariable Long productId,@RequestBody ProductDto productDto){
+        Product product =this.productService.update(productId,productDto.getPrice());
+        return  new ResponseEntity<>(product,HttpStatus.OK);
     }
 
 }

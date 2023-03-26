@@ -53,3 +53,11 @@ export const fetchProductById = async (productId) => {
   });
   return data;
 };
+
+// export const fetchUpdateProductPrice = async (input) => {
+//   const { data } = await axios.put(`/api/products/updatePrice/${input.id}` ,{
+//     withCredentials: true,
+//     data:input.price
+//   });
+//   return data;
+// };
