@@ -1,16 +1,20 @@
 import {
   Card,
   CardBody,
-  Image,
-  Stack,
   Text,
   Divider,
   CardFooter,
-  ButtonGroup,
   Button,
   Input,
   Heading,
   CardHeader,
+  Box,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Td,
+  Tbody,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { over } from "stompjs";
@@ -20,13 +24,13 @@ import { useParams } from "react-router-dom";
 
 var stompClient = null;
 
-function ChatCard({price,setPrice}) {
+function ChatCard({ price, setPrice }) {
   const { productId } = useParams();
   const { user } = useAuth();
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
     username: user.username,
-    productId:productId,
+    productId: productId,
     recievername: "",
     connected: false,
     message: "",
@@ -45,14 +49,18 @@ function ChatCard({price,setPrice}) {
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/user/"+userData.productId+"/private",onPublicMessageReceived);
+    stompClient.subscribe(
+      "/user/" + userData.productId + "/private",
+      onPublicMessageReceived
+    );
   };
 
-  const sendPublicMessage = () => {  //43.33
+  const sendPublicMessage = () => {
+    //43.33
     if (stompClient) {
       let chatMessage = {
         senderUsername: userData.username,
-        productId:productId,
+        productId: productId,
         message: userData.message,
         status: "MESSAGE",
       };
@@ -62,15 +70,15 @@ function ChatCard({price,setPrice}) {
   };
 
   const onPublicMessageReceived = (payload) => {
-    console.log("ilk payload : ",payload.body);
+    console.log("ilk payload : ", payload.body);
     let payloadData = JSON.parse(payload.body);
     switch (payloadData.status) {
       case "JOIN":
         break;
       case "MESSAGE":
         publicChats.push(payloadData);
-        setPrice(payloadData.message ? payloadData.message : price)
-        console.log("yapload data : " ,payloadData.message);
+        setPrice(payloadData.message ? payloadData.message : price);
+        console.log("yapload data : ", payloadData.message);
         setPublicChats([...publicChats]);
         break;
     }
@@ -87,18 +95,37 @@ function ChatCard({price,setPrice}) {
           <Heading size="md">Live Data</Heading>
         </CardHeader>
         <Divider />
-
         <CardBody>
-          {publicChats.length !=0 ? publicChats.map((chat, index) => (
-            <li key={index}>
-              {chat.senderUsername === userData.username && (
-                <Text>Username : {chat.senderUsername} Message:{chat.message}</Text>
-              )}
-              {chat.senderUsername !== userData.username && (
-                <Text color="green">Username : {chat.senderUsername} Message:{chat.message}</Text>
-              )}
-            </li>
-          )): <Text>naberd</Text>}
+          <Box overflowY="auto" maxHeight="400px">
+            <Table>
+              <Thead position="sticky"  bgColor="blue.300">
+                <Tr>
+                  <Th fontSize="sm" color="black">USERNAME</Th>
+                  <Th fontSize="sm"color="black">PRICE</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {publicChats.length != 0 ? (
+                  publicChats.map(
+                    (chat, index) =>
+                      chat.senderUsername === userData.username ? (
+                        <Tr>
+                          <Td>{chat.senderUsername}</Td>
+                          <Td>{chat.message}</Td>
+                        </Tr>
+                      ) : (
+                        <Tr color="blue">
+                          <Td>{chat.senderUsername}</Td>
+                          <Td>{chat.message}</Td>
+                        </Tr>
+                      )
+                  )
+                ) : (
+                  <></>
+                )}
+              </Tbody>
+            </Table>
+          </Box>
         </CardBody>
 
         <Divider />
@@ -114,7 +141,7 @@ function ChatCard({price,setPrice}) {
             colorScheme="blue"
             onClick={sendPublicMessage}
           >
-            Add to cart
+            Give a price
           </Button>
         </CardFooter>
       </Card>

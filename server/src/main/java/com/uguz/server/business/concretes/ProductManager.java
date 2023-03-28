@@ -1,16 +1,16 @@
 package com.uguz.server.business.concretes;
 
 import com.uguz.server.business.abstracts.ProductService;
-import com.uguz.server.dto.ProductDto;
 import com.uguz.server.entities.Product;
-import com.uguz.server.entities.User;
 import com.uguz.server.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@EnableAutoConfiguration
 public class ProductManager implements ProductService {
 
     private ProductRepository productRepository;
@@ -21,9 +21,13 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public boolean create(Product product) {
+    public void create(Product product) {
         this.productRepository.save(product);
-        return true;
+    }
+
+    @Override
+    public long count() {
+        return this.productRepository.count();
     }
 
     @Override
@@ -58,4 +62,6 @@ public class ProductManager implements ProductService {
     public List<Product> getAll() {
         return this.productRepository.findAll();
     }
+
+
 }

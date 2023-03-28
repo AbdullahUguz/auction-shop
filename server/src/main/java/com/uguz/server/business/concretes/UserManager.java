@@ -17,7 +17,6 @@ public class UserManager implements UserService {
     private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Autowired
     public UserManager(UserRepository userRepository,PasswordEncoder passwordEncoder){
         this.userRepository=userRepository;
@@ -26,17 +25,20 @@ public class UserManager implements UserService {
 
     @Override
     public void create(User user) {
-        /*
-         buraya bir control ekle istersen aynı isim varsa eklemesin
-         */
         String encodedMasterPassword = passwordEncoder.encode(CharBuffer.wrap(user.getPassword()));
         user.setPassword(encodedMasterPassword);
         this.userRepository.save(user);
     }
 
+    @Override
+    public long count() {
+        return  this.userRepository.count();
+    }
 
     @Override
     public User findByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
+
+
 }
