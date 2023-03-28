@@ -9,8 +9,11 @@ import {
   Flex,
   Image,
 } from "@chakra-ui/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Navbar() {
+  const { user } = useAuth();
+
   return (
     <Box as="nav" bg="#EBF8FF" boxShadow="md" p={{ base: "4", lg: "3" }}>
       <Container maxW="1400px">
@@ -26,10 +29,19 @@ function Navbar() {
                 <Button variant="link">Main Page</Button>
               </Link>
             </ButtonGroup>
-            <HStack spacing="10">
-              <Link to="/profile">
-                <Button colorScheme="blue">Profile</Button>
-              </Link>
+            <HStack spacing="8">
+              <Flex>
+                <Link to="/profile">
+                  <Button colorScheme="blue">Profile</Button>
+                </Link>
+                {user.role === "admin" ? (
+                  <Link to="/admin">
+                    <Button ml="2" colorScheme="green">Admin Page</Button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </Flex>
             </HStack>
           </Flex>
         </HStack>

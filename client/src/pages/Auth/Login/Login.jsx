@@ -8,7 +8,6 @@ import Logo from "../../../logo/logo.png";
 import {
   Flex,
   Box,
-  Heading,
   FormControl,
   FormLabel,
   Button,
@@ -27,7 +26,6 @@ function Login() {
     handleChange,
     handleBlur,
     values,
-    //  isSubmitting,
     errors,
     touched,
   } = useFormik({
@@ -42,12 +40,12 @@ function Login() {
           password: values.password,
         })
           .then((res) => {
-            console.log("cookie : ", document.cookie);
             login({ username: res.username, role: res.role });
             navigate("/");
           })
           .catch((err) => {
-            alert(err);
+            alert("Email or Password incorrect");
+            console.log(err);
             bag.resetForm();
           });
       } catch (error) {

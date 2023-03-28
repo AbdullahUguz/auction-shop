@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.util.List;
 
 @Service
 @EnableAutoConfiguration
@@ -33,6 +34,11 @@ public class UserManager implements UserService {
     @Override
     public long count() {
         return  this.userRepository.count();
+    }
+
+    @Override
+    public List<User> getAll() {
+        return this.userRepository.findAll();
     }
 
     @Override

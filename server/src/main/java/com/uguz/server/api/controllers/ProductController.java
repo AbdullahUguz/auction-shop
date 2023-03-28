@@ -31,6 +31,9 @@ public class ProductController {
     @GetMapping("/getAll")
     private ResponseEntity<List<Product>> getAll(){
         List<Product> products = this.productService.getAll();
+        if(products == null){
+            return  new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 

@@ -1,7 +1,6 @@
 import {
   Card,
   CardBody,
-  Text,
   Divider,
   CardFooter,
   Button,
@@ -56,7 +55,6 @@ function ChatCard({ price, setPrice }) {
   };
 
   const sendPublicMessage = () => {
-    //43.33
     if (stompClient) {
       let chatMessage = {
         senderUsername: userData.username,
@@ -105,16 +103,16 @@ function ChatCard({ price, setPrice }) {
                 </Tr>
               </Thead>
               <Tbody>
-                {publicChats.length != 0 ? (
+                {publicChats.length !== 0 ? (
                   publicChats.map(
                     (chat, index) =>
                       chat.senderUsername === userData.username ? (
-                        <Tr>
+                        <Tr key={index}>
                           <Td>{chat.senderUsername}</Td>
                           <Td>{chat.message}</Td>
                         </Tr>
                       ) : (
-                        <Tr color="blue">
+                        <Tr key={index} color="blue">
                           <Td>{chat.senderUsername}</Td>
                           <Td>{chat.message}</Td>
                         </Tr>

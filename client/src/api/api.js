@@ -54,6 +54,15 @@ export const fetchProductById = async (productId) => {
   return data;
 };
 
+export const fetchGetAllUser = async (productId) => {
+  const { data } = await axios.get("/api/users/getAll", {
+    withCredentials: true,
+  });
+  return data;
+};
+
+
+
 // export const fetchUpdateProductPrice = async (input) => {
 //   const { data } = await axios.put(`/api/products/updatePrice/${input.id}` ,{
 //     withCredentials: true,

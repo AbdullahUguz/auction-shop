@@ -28,9 +28,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@AuthenticationPrincipal UserDto loginUser) {
+
         User user = userService.findByEmail(loginUser.getEmail());
         if(user == null){
-            return (ResponseEntity<User>) ResponseEntity.notFound();
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }else{
             return ResponseEntity.ok(user);
         }

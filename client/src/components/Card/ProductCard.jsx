@@ -19,7 +19,7 @@ function ProductCard({ product }) {
       <CardBody>
         <Image
           src={product.imageUrl}
-          alt="Green double couch with wooden legs"
+          alt="Product Image"
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">

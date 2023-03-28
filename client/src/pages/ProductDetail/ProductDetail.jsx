@@ -1,4 +1,4 @@
-import { Container, SimpleGrid } from "@chakra-ui/react";
+import { Container, SimpleGrid,Text} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import ProductDetailCard from "../../components/Card/ProductDetailCard";
 import ChatCard from "../../components/Card/ChatCard";
@@ -9,16 +9,14 @@ function ProductDetail() {
   const [price,setPrice]=useState();
   const { productId } = useParams();
   const [product, setProduct] = useState();
-  useEffect(() => {
-    console.log("productId : ", productId);
 
+  useEffect(() => {
     getProductById();
   }, []);
 
   const getProductById = async () => {
     await fetchProductById(productId)
       .then((res) => {
-        console.log("res getProductById : ", res);
         setProduct(res);
         setPrice(res.price);
       })
@@ -33,7 +31,7 @@ function ProductDetail() {
         {product ? (
           <ProductDetailCard product={product} price={price}></ProductDetailCard>
         ) : (
-          <p>Loading...</p>
+          <Text>Loading...</Text>
         )}
         <ChatCard price={price}  setPrice={setPrice}></ChatCard>
       </SimpleGrid>

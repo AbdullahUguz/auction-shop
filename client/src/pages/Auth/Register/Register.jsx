@@ -3,7 +3,6 @@ import Logo from "../../../logo/logo.png";
 import {
   Flex,
   Box,
-  Heading,
   FormControl,
   FormLabel,
   Button,
@@ -26,7 +25,6 @@ function Register() {
     handleChange,
     handleBlur,
     values,
-    //  isSubmitting,
     errors,
     touched,
   } = useFormik({

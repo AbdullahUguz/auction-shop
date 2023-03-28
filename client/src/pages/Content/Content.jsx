@@ -1,4 +1,4 @@
-import { Container, Flex, Stack, SimpleGrid } from "@chakra-ui/react";
+import { Container, Text, SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { fetchGetAllProduct } from "../../api/api";
 import ProductCard from "../../components/Card/ProductCard";
@@ -30,7 +30,7 @@ function Content() {
         {products ? (
           products.map((product) => <ProductCard key={product.id} product={product}></ProductCard>)
         ) : (
-          <p>Loading...</p>
+          <Text>Loading...</Text>
         )}
       </SimpleGrid>
     </Container>
