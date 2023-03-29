@@ -25,9 +25,9 @@ function ProductDetailCard({product,price}) {
             {product.description}
           </Text>
           
-          <Text color="blue.600" fontSize="2xl">
+          {/* <Text color="blue.600" fontSize="2xl">
              {product.price} TL
-          </Text>
+          </Text> */}
           <Text color="green" fontSize="2xl">
              {price} TL
           </Text>

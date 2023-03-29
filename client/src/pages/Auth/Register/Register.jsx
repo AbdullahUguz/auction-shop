@@ -44,11 +44,12 @@ function Register() {
             navigate("/");
           })
           .catch((err) => {
-            alert(err);
+            alert(err.response.statusText);
             bag.resetForm();
           });
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        alert(err.response.statusText);
+        console.log(err);
       }
     },
     validationSchema: validations,

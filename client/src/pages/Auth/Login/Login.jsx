@@ -44,7 +44,7 @@ function Login() {
             navigate("/");
           })
           .catch((err) => {
-            alert("Email or Password incorrect");
+            alert(err.response.data.message ? err.response.data.message : err.response.statusText);
             console.log(err);
             bag.resetForm();
           });

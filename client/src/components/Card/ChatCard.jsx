@@ -15,7 +15,7 @@ import {
   Td,
   Tbody,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useAuth } from "../../contexts/AuthContext";
@@ -24,16 +24,30 @@ import { useParams } from "react-router-dom";
 var stompClient = null;
 
 function ChatCard({ price, setPrice }) {
-  const { productId } = useParams();
   const { user } = useAuth();
+  const { productId } = useParams();
+  const [connected, setConnected] = useState(false);
+  const [auctionEnd, setAuctionEnd] = useState(false);
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
     username: user.username,
     productId: productId,
-    recievername: "",
-    connected: false,
     message: "",
   });
+
+  useEffect(() => {
+    registerUser();
+
+    setTimeout(function () {
+      stompClient.disconnect();
+      setAuctionEnd(true);
+      setConnected(false);
+    }, 20000);
+  }, []);
+
+  const connectButton = () => {
+    setConnected(true);
+  };
 
   const handleMessage = (event) => {
     const value = event.target.value;
@@ -47,38 +61,47 @@ function ChatCard({ price, setPrice }) {
   };
 
   const onConnected = () => {
-    setUserData({ ...userData, connected: true });
     stompClient.subscribe(
-      "/user/" + userData.productId + "/private",
+      "/product/" + userData.productId + "/private",
       onPublicMessageReceived
     );
   };
 
   const sendPublicMessage = () => {
-    if (stompClient) {
-      let chatMessage = {
-        senderUsername: userData.username,
-        productId: productId,
-        message: userData.message,
-        status: "MESSAGE",
-      };
-      stompClient.send("/app/productmessage", {}, JSON.stringify(chatMessage));
-      setUserData({ ...userData, message: "" });
+    if (messageControl()) {
+      if (stompClient) {
+        let chatMessage = {
+          senderUsername: userData.username,
+          productId: productId,
+          message: userData.message,
+        };
+        stompClient.send(
+          "/app/productmessage",
+          {},
+          JSON.stringify(chatMessage)
+        );
+        setUserData({ ...userData, message: "" });
+      }
+    }
+  };
+
+  const messageControl = () => {
+    if (Number(userData.message) <= price) {
+      alert("price not be  small , equal or empty");
+      return false;
+    } else {
+      return true;
     }
   };
 
   const onPublicMessageReceived = (payload) => {
     console.log("ilk payload : ", payload.body);
     let payloadData = JSON.parse(payload.body);
-    switch (payloadData.status) {
-      case "JOIN":
-        break;
-      case "MESSAGE":
-        publicChats.push(payloadData);
-        setPrice(payloadData.message ? payloadData.message : price);
-        console.log("yapload data : ", payloadData.message);
-        setPublicChats([...publicChats]);
-        break;
+
+    if (payloadData) {
+      publicChats.push(payloadData);
+      setPrice(payloadData.message ? payloadData.message : price);
+      setPublicChats([...publicChats]);
     }
   };
 
@@ -86,37 +109,40 @@ function ChatCard({ price, setPrice }) {
     console.log("websocket error :  ", err);
   };
 
-  return userData.connected ? (
+  return (
     <>
       <Card maxW="lg">
         <CardHeader>
-          <Heading size="md">Live Data</Heading>
+          <Heading size="md">Auction Live Data</Heading>
         </CardHeader>
         <Divider />
         <CardBody>
           <Box overflowY="auto" maxHeight="400px">
             <Table>
-              <Thead position="sticky"  bgColor="blue.300">
+              <Thead position="sticky" bgColor="blue.300">
                 <Tr>
-                  <Th fontSize="sm" color="black">USERNAME</Th>
-                  <Th fontSize="sm"color="black">PRICE</Th>
+                  <Th fontSize="sm" color="black">
+                    USERNAME
+                  </Th>
+                  <Th fontSize="sm" color="black">
+                    PRICE
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {publicChats.length !== 0 ? (
-                  publicChats.map(
-                    (chat, index) =>
-                      chat.senderUsername === userData.username ? (
-                        <Tr key={index}>
-                          <Td>{chat.senderUsername}</Td>
-                          <Td>{chat.message}</Td>
-                        </Tr>
-                      ) : (
-                        <Tr key={index} color="blue">
-                          <Td>{chat.senderUsername}</Td>
-                          <Td>{chat.message}</Td>
-                        </Tr>
-                      )
+                  publicChats.map((chat, index) =>
+                    chat.senderUsername === userData.username ? (
+                      <Tr key={index}>
+                        <Td>{chat.senderUsername}</Td>
+                        <Td>{chat.message}</Td>
+                      </Tr>
+                    ) : (
+                      <Tr key={index} color="blue">
+                        <Td>{chat.senderUsername}</Td>
+                        <Td>{chat.message}</Td>
+                      </Tr>
+                    )
                   )
                 ) : (
                   <></>
@@ -127,47 +153,43 @@ function ChatCard({ price, setPrice }) {
         </CardBody>
 
         <Divider />
-        <CardFooter>
-          <Input
-            type="number"
-            value={userData.message}
-            onChange={handleMessage}
-          />
-          <Button
-            variant="solid"
-            ml={2}
-            colorScheme="blue"
-            onClick={sendPublicMessage}
-          >
-            Give a price
-          </Button>
-        </CardFooter>
-      </Card>
-    </>
-  ) : (
-    <>
-      <Card maxW="md" h="200">
-        <CardHeader>
-          <Heading size="md">Join to Auction</Heading>
-        </CardHeader>
-        <Divider />
-        <CardBody align="center">
-          <Input
-            type="text"
-            value={user.username}
-            placeholder={user.username}
-            disabled
-          />
-          <Button
-            variant="solid"
-            ml={2}
-            px="20"
-            colorScheme="blue"
-            onClick={registerUser}
-          >
-            Join
-          </Button>
-        </CardBody>
+
+        {auctionEnd ? (
+          <CardFooter>Auction End Last price is {price} TL</CardFooter>
+        ) : (
+          <CardFooter>
+            {connected ? (
+              <>
+                <Input
+                  type="number"
+                  value={userData.message}
+                  onChange={handleMessage}
+                  isDisabled={auctionEnd}
+                />
+                <Button
+                  variant="solid"
+                  ml={2}
+                  colorScheme="blue"
+                  onClick={sendPublicMessage}
+                  isDisabled={auctionEnd}
+                >
+                  Give a price
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="solid"
+                ml={2}
+                mt={2}
+                px="20"
+                colorScheme="blue"
+                onClick={connectButton}
+              >
+                Join
+              </Button>
+            )}
+          </CardFooter>
+        )}
       </Card>
     </>
   );

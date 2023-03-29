@@ -11,5 +11,4 @@ public class Message {
     private String senderUsername;
     private String productId;
     private String message;
-    private Status status;
 }
