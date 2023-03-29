@@ -26,7 +26,6 @@ public class UsernamePasswordAuthFilter extends OncePerRequestFilter {
                 && HttpMethod.POST.matches(httpServletRequest.getMethod())) {
             CredentialsDto credentialsDto = MAPPER.readValue(httpServletRequest.getInputStream(), CredentialsDto.class);
 
-            // burası sanırsam
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(credentialsDto.getEmail(), credentialsDto.getPassword()));
         }

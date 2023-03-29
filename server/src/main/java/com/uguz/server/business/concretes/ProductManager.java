@@ -36,29 +36,6 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public Product getProductByPrice(double price) {
-        return this.productRepository.findProductByPrice(price);
-    }
-
-    @Override
-    public Product getProductByTitle(String title) {
-        return this.productRepository.findProductByTitle(title);
-    }
-
-    @Override
-    public Product update(long id,double price) {
-        Product product = this.getById(id);
-        if(product == null){
-            System.out.println("product null");
-            return null;
-        }else {
-            product.setPrice(price);
-            this.productRepository.save(product);
-            return  product;
-        }
-    }
-
-    @Override
     public List<Product> getAll() {
         return this.productRepository.findAll();
     }

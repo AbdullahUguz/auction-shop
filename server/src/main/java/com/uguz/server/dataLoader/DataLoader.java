@@ -2,11 +2,8 @@ package com.uguz.server.dataLoader;
 
 import com.uguz.server.business.abstracts.ProductService;
 import com.uguz.server.business.abstracts.UserService;
-import com.uguz.server.business.concretes.UserManager;
 import com.uguz.server.entities.Product;
 import com.uguz.server.entities.User;
-import com.uguz.server.repository.ProductRepository;
-import com.uguz.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
