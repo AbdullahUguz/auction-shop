@@ -1,15 +1,5 @@
 import axios from "axios";
 
-// axios.interceptors.request.use(
-//      (config) => {
-//       const allowedOrigins = "http://localhost:8080";
-//       return config;
-//     },
-//      (error) => {
-//       return Promise.reject(error);
-//     }
-// );
-
 export const fetchRegister = async (input) => {
   const { data } = await axios.post(`/auth/register`, input);
   return data;
@@ -60,13 +50,3 @@ export const fetchGetAllUser = async (productId) => {
   });
   return data;
 };
-
-
-
-// export const fetchUpdateProductPrice = async (input) => {
-//   const { data } = await axios.put(`/api/products/updatePrice/${input.id}` ,{
-//     withCredentials: true,
-//     data:input.price
-//   });
-//   return data;
-// };

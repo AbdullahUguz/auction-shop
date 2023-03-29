@@ -1,9 +1,9 @@
 import {object,string} from "yup";
 
 let userSchema = object({
-    email: string().email("Geçerli bir email giriniz").required("Bu alan boş bırakılamaz"),
-    password: string().min(5,"Minimum 5 karakter giriniz").required("Bu alan boş bırakılamaz"),
-    username: string().required("Bu alan boş bırakılamaz"),
+    email: string().email("Enter a valid email").required("This field cannot be left blank"),
+    password: string().min(5,"Please enter at least 5 characters").required("This field cannot be left blank"),
+    username: string().required("This field cannot be left blank"),
 })
 
 export default userSchema;

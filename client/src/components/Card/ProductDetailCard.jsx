@@ -28,7 +28,7 @@ function ProductDetailCard({product,price}) {
           {/* <Text color="blue.600" fontSize="2xl">
              {product.price} TL
           </Text> */}
-          <Text color="green" fontSize="2xl">
+          <Text fontSize="2xl" as='b' color="tomato">
              {price} TL
           </Text>
         </Stack>
