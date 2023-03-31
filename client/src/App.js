@@ -9,6 +9,7 @@ import ProtectedRouteAdmin from "./pages/ProtectedRoute/ProtectedRouteAdmin";
 import { useAuth } from "./contexts/AuthContext";
 import Profile from "./pages/Profile/Profile";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import Error from "./pages/Error/Error";
 
 function App() {
   const { loggedIn,user } = useAuth();
@@ -36,6 +37,8 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Error />} />
+
       </Routes>
     </BrowserRouter>
   );
