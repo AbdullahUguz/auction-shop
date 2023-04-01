@@ -1,46 +1,61 @@
 # Auction-Shop
 
-## Bilgiler
+## Information
 - Name: "Abdullah",
 - Surname: "UĞUZ",
 - Email: "abdullahuguz08@gmail.com",
 - RegistrationKey: "d3c044bd61e9ea28917af13988b17b5ec050d70643729239f3387f501e4ceaf0"
 
+**Technologies Used in the Project;**
+ - Spring Boot
+ - ReactJS ( Chakra-ui was used for design )
+ - Websocket
+ - Redis 
+ - PostgreSQL
 
+## Description
 
-## Açıklama
+The Acuation Shop project is a platform where users can participate in live auctions online and products are presented for auction on this platform.
 
-Acuation Shop projesi, kullanıcıların online olarak müzayedeye canlı bir şekilde katılabildikleri bir platformdur ve bu platform üzerinden ürünler açık artırmaya sunulmaktadır.
+## Installation
 
-## Kurulum
+After downloading the project;
 
-Projeyi indirdikten sonra;
+1. Navigate to the directory where the docker-compose.yml file is located in your terminal and run the command `docker-compose up`. This command creates a container called `auctionshop` in Docker and runs Postgre and Redis inside it..
+2. Open and run our server file. (Preferably in Intellij Idea editor.)
+3. Go to the client directory and run the `npm install` command. After the necessary dependencies are installed, run the client with the `npm run` command.
 
-1. Terminalinizden docker-compose.yml dosyasının olduğu dizinine gelerek `docker-compose up` komutunu çalıştırınız. Bu komut docker da `auctionshop` adında container oluşturur ve içinde postgre ve redisi ayağa kaldırır.
-2. Server dosyamızı açıp çalıştırınız. ( Tercihen Intellij Idea editöründe çalıştırabilirsiniz.)
-3. Client dosyamızın içerisine girip `npm install` komutunu çalıştırınız. Gerekli dependencies kurulduktan sonra `npm run` komutu ile clientı çalıştırınız.
+## Usage
 
-## Kullanım
+After the server part of the project is up and running, users and products will be automatically added to the system through the Data Loader structure.
 
-Projede server kısmı çalıştıktan sonra Data Loader yapısı ile kullanıcılar ve ürünler otomatik olarak sisteme eklenecektir.
+Information of Registered Users;
 
-Sisteme Kayıtlı Kullanıcıların Bilgileri:
-
-| Username | Email           | Şifre | Role  |
+| Username | Email           | Password | Role  |
 |----------|----------------|-------|-------|
 | Admin    | admin@gmail.com | 12345 | admin |
 | User     | user@gmail.com  | 12345 | user  |
 | User2    | user2@gmail.com | 12345 | user  |
 
-Client çalıştıktan sonra yukarıdaki bilgiler ile sisteme giriş yapabilirsiniz. İsterseniz register sayfasından yeni kullanıcı ekleyebilirisiniz.
+After running the client, you can login to the system with the above information. You can also add a new user from the register page if you want.
 
-Giriş yaptıktan sonra ana sayfaya gelen ürünlerden birini seçip müzayede ekranına gidebilirsiniz.
+( Even if you turn off the server and restart it after logging in to the system, the same user continues to use the platform. Because I keep session information in redis. )
 
-Müzayede ekranına geldikten sonra eğer diğer kullanıcılar yeni fiyat veriyorsalar veren kişi ve vermiş olduğu fiyat ekranda gözükür. Aynı zamanda ürünün fiyatı da güncellenmektedir. Siz de müzayedeye katılmak istiyorsanız "Join" butonuna tıklayarak katılabilirsiniz.
+After logging in, you can select one of the products on the home page and go to the auction screen.
+
+Once you're on the auction screen, if other users are giving new prices, the person who gave the price and the price they gave are displayed on the screen. At the same time, the price of the product is also updated. You can also join the auction by clicking the "Join" button if you want.
 
 
-### Proje Tanıtım Videosu 
+### Project Introduction Video 
 https://youtu.be/K5z_lrhssl0
+
+
+### Missing and Defective Parts in the Project
+1. I added the frontend to the docker-compose.yml file to run it together, but it is commented out because I got an error related to the proxy when I ran it.
+
+2. I update the price of the products in the background when a message is sent to the websocket. This causes performance issues.
+
+3. The time for the auction also starts counting down separately for each user when they enter the auction. So the auction does not end at the same time for everyone.
 
 
 
