@@ -42,7 +42,7 @@ function ChatCard({ price, setPrice }) {
       stompClient.disconnect();
       setAuctionEnd(true);
       setConnected(false);
-    }, 20000);
+    }, 30000);
   }, []);
 
   const connectButton = () => {
@@ -95,7 +95,6 @@ function ChatCard({ price, setPrice }) {
   };
 
   const onPublicMessageReceived = (payload) => {
-    console.log("ilk payload : ", payload.body);
     let payloadData = JSON.parse(payload.body);
 
     if (payloadData) {

@@ -22,7 +22,6 @@ function ProductTable() {
   const getAllProduct = async () => {
     await fetchGetAllProduct()
       .then((res) => {
-        console.log("product res :", res);
         setProducts(res);
       })
       .catch((err) => {

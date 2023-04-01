@@ -13,7 +13,6 @@ function Content() {
   const getAllProduct = async () => {
     await fetchGetAllProduct()
       .then((res) => {
-        console.log("res getAll : ", res);
         setProducts(res);
       })
       .catch((err) => {

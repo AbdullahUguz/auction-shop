@@ -21,7 +21,6 @@ function UserTable() {
   const getAllUser = async () => {
     await fetchGetAllUser()
       .then((res) => {
-        console.log("user table res : ", res);
         setUsers(res);
       })
       .catch((err) => {
