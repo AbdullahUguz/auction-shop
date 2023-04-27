@@ -1,11 +1,5 @@
 # Auction-Shop
 
-## Information
-- Name: "Abdullah",
-- Surname: "UĞUZ",
-- Email: "abdullahuguz08@gmail.com",
-- RegistrationKey: "d3c044bd61e9ea28917af13988b17b5ec050d70643729239f3387f501e4ceaf0"
-
 **Technologies Used in the Project;**
  - Spring Boot
  - ReactJS ( Chakra-ui was used for design )
@@ -15,7 +9,7 @@
 
 ## Description
 
-The Acuation Shop project is a platform where users can participate in live auctions online and products are presented for auction on this platform.
+The "Acuation Shop" project is a platform that enables users to participate in live online auctions, where various products are presented for auction. It provides a convenient and easy-to-use interface for users to bid on items and monitor the live bidding process. 
 
 ## Installation
 
@@ -44,19 +38,6 @@ After running the client, you can login to the system with the above information
 After logging in, you can select one of the products on the home page and go to the auction screen.
 
 Once you're on the auction screen, if other users are giving new prices, the person who gave the price and the price they gave are displayed on the screen. At the same time, the price of the product is also updated. You can also join the auction by clicking the "Join" button if you want.
-
-
-### Project Introduction Video 
-https://youtu.be/K5z_lrhssl0
-
-
-### Missing and Defective Parts in the Project
-1. I added the frontend to the docker-compose.yml file to run it together, but it is commented out because I got an error related to the proxy when I ran it.
-
-2. I update the price of the products in the background when a message is sent to the websocket. This causes performance issues.
-
-3. The time for the auction also starts counting down separately for each user when they enter the auction. So the auction does not end at the same time for everyone.
-
 
 
 
